@@ -41,5 +41,26 @@ describe('Testing AngularJS Test Suite', function() {
         	expect(scope.destinations[0].city).toBe("Trivandrum");
         	expect(scope.destinations[0].country).toBe("India");
         });
+
+        it('should remove a destination from the destinations list', function () {
+        	scope.destinations = [
+        		{
+        			city: "Paris",
+        			country: "France"
+        		},
+        		{
+        			city: "Kochi",
+        			country: "India"
+        		}
+        	];
+
+        	expect(scope.destinations.length).toBe(2);
+
+        	scope.removeDestination(0);
+
+        	expect(scope.destinations.length).toBe(1);
+        	expect(scope.destinations[0].city).toBe("Kochi");
+        	expect(scope.destinations[0].country).toBe("India");
+        });
     });
 });

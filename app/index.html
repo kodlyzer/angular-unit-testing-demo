@@ -22,6 +22,7 @@
 		<h2>Trip Summary</h2>
 		<div ng-repeat="destination in destinations">
 			<span>{{destination.city}}, {{destination.country}}</span>
+			<button ng-click="removeDestination($index)">Remove</button>
 		</div>
 	</section>
 </body>

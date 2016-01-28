@@ -18,4 +18,8 @@ angular.module('testingAngularApp')
 			country: $scope.newDestination.country
 		});
 	};
+
+	// $scope.removeDestination = function (index) {
+	// 	$scope.destinations.splice(index, 1)	
+	// };
 }])
