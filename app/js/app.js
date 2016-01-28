@@ -19,7 +19,7 @@ angular.module('testingAngularApp')
 		});
 	};
 
-	// $scope.removeDestination = function (index) {
-	// 	$scope.destinations.splice(index, 1)	
-	// };
+	$scope.removeDestination = function (index) {
+		$scope.destinations.splice(index, 1)	
+	};
 }])
