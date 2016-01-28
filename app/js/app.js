@@ -2,24 +2,45 @@ angular.module('testingAngularApp', []);
 
 angular.module('testingAngularApp')
 
-.controller('testingAngularCtrl', ['$rootScope', '$scope', function($rootScope, $scope){
-	$scope.title = "Testing Angular Applications";
+.controller('testingAngularCtrl', ['$rootScope', '$scope', '$http', function($rootScope, $scope, $http) {
+    $scope.title = "Testing Angular Applications";
 
-	$scope.destinations = [];
+    $scope.destinations = [];
 
-	$scope.newDestination = {
-		city: undefined,
-		country: undefined
-	};
+    //api key from 'http://api.openweathermap.org/data/2.5/weather?q=London,uk&appid=44db6a862fba0b067b1930da0d769e98'
+    $scope.apiKey = "44db6a862fba0b067b1930da0d769e98";
 
-	$scope.addDestination = function () {
-		$scope.destinations.push({
-			city: $scope.newDestination.city,
-			country: $scope.newDestination.country
-		});
-	};
+    $scope.newDestination = {
+        city: undefined,
+        country: undefined
+    };
 
-	$scope.removeDestination = function (index) {
-		$scope.destinations.splice(index, 1)	
-	};
+    $scope.addDestination = function() {
+        $scope.destinations.push({
+            city: $scope.newDestination.city,
+            country: $scope.newDestination.country
+        });
+    };
+
+    $scope.removeDestination = function(index) {
+        $scope.destinations.splice(index, 1)
+    };
+
+    $scope.getWeather = function(destination) {
+        $http.get("http://api.openweathermap.org/data/2.5/weather?q=" + destination.city + "," + destination.country + "&appid=" + $scope.apiKey)
+            .then(function(response) {
+                if (response.data.weather) {
+                    destination.weather = {};
+                    destination.weather.main = response.data.weather[0].main;
+                    destination.weather.temp = $scope.convertKelvinToCalcius(response.data.main.temp);
+                }
+            }, function(error) {
+                console.log(error);
+            });
+
+    };
+
+    $scope.convertKelvinToCalcius = function (temp) {
+    	return Math.round(temp - 273);
+    };
 }])
