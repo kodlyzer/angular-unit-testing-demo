@@ -139,9 +139,10 @@ describe('Testing AngularJS Test Suite', function() {
     });
 
     describe('Testing AngularJS Directive', function() {
-        var scope, isolateScope, template, httpBackend;
+        var scope, isolateScope, template, httpBackend, rootScope;
         beforeEach(inject(function($compile, $rootScope, $httpBackend) {
             scope = $rootScope.$new();
+            rootScope = $rootScope;
             httpBackend = $httpBackend;
 
             scope.destination = {
@@ -185,6 +186,42 @@ describe('Testing AngularJS Test Suite', function() {
 
             expect(scope.destination.weather.main).toBe("Haze");
             expect(scope.destination.weather.temp).toBe(28);
+        });
+
+		it('should add a message if no city is found', function() {
+            scope.destination = {
+                city: "Trivandrum",
+                country: "India"
+            };
+
+            httpBackend.expectGET("http://api.openweathermap.org/data/2.5/weather?q=" + scope.destination.city + "," + scope.destination.country + "&appid=" + scope.apiKey)
+                .respond({});
+
+            isolateScope.getWeather(scope.destination);
+
+            // flush the requests, 
+            // ie, send response to all pending requests
+            httpBackend.flush();
+
+            expect(rootScope.message).toBe("City not found");
+        });
+
+		it('should add a message when there is a server error', function() {
+            scope.destination = {
+                city: "Trivandrum",
+                country: "India"
+            };
+
+            httpBackend.expectGET("http://api.openweathermap.org/data/2.5/weather?q=" + scope.destination.city + "," + scope.destination.country + "&appid=" + scope.apiKey)
+                .respond(500);
+
+            isolateScope.getWeather(scope.destination);
+
+            // flush the requests, 
+            // ie, send response to all pending requests
+            httpBackend.flush();
+
+            expect(rootScope.message).toBe("Server error!");
         });
 
 		it('should call the parent controller remove function', function () {
