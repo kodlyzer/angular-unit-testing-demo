@@ -156,4 +156,18 @@ describe('Testing AngularJS Test Suite', function() {
 		}));
 	});
 
+	describe('Testing AngularJS Service', function () {
+		var helperFactory;
+		beforeEach(inject(function (helpersFactory){
+			helperFactory = helpersFactory;
+		}));
+
+		it('should convert kelvin to celsius', function () {
+			var tempInKelvin = 300.15,
+				tempInCelsius = helperFactory.convertKelvinToCelsius(tempInKelvin);
+
+			expect(tempInCelsius).toBe(27);
+		});
+	});
+
 });
