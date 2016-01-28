@@ -54,3 +54,17 @@ angular.module('testingAngularApp')
     	}
     })
 }])
+
+.filter('warmestDestinations',function() {
+	return function (destinations, minimumTemp) {
+		var warmDestinations = [];
+
+		angular.forEach(destinations, function(destination){
+			if (destination.weather && destination.weather.temp && destination.weather.temp >= minimumTemp) {
+				warmDestinations.push(destination);
+			}
+		});
+
+		return warmDestinations
+	}
+})
