@@ -21,6 +21,7 @@
     </section>
     <section ng-show="destinations.length > 0">
         <h2>Trip Summary</h2>
+        <h4 ng-show="message">{{message}}</h4>
         <div ng-repeat="destination in destinations">
             <span>{{destination.city}}, {{destination.country}}</span>
             <span ng-if="destination.weather"> - {{destination.weather.main}}, {{destination.weather.temp}}</span>

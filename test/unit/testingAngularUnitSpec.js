@@ -2,13 +2,14 @@ describe('Testing AngularJS Test Suite', function() {
     beforeEach(module('testingAngularApp'));
 
     describe('Testing AngularJS Controller', function() {
-        var scope, ctrl, httpBackend;
-        beforeEach(inject(function($controller, $rootScope, $httpBackend) {
+        var scope, ctrl, httpBackend, timeout;
+        beforeEach(inject(function($controller, $rootScope, $httpBackend, $timeout) {
             scope = $rootScope.$new();
             ctrl = $controller('testingAngularCtrl', {
                 $scope: scope
             });
             httpBackend = $httpBackend;
+            timeout = $timeout;
         }));
 
 
@@ -98,5 +99,18 @@ describe('Testing AngularJS Test Suite', function() {
             expect(scope.destination.weather.main).toBe("Haze");
             expect(scope.destination.weather.temp).toBe(28);
         });
+
+		it('should remove error message after a fixed period of time', function () {
+			scope.message = "Error";
+			expect(scope.message).toBe("Error");
+
+			// apply explicity
+			scope.$apply();
+
+			// flush all pending timeouts
+			timeout.flush();
+
+			expect(scope.message).toBeNull();
+		})
     });
 });

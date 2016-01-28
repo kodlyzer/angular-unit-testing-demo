@@ -2,7 +2,7 @@ angular.module('testingAngularApp', []);
 
 angular.module('testingAngularApp')
 
-.controller('testingAngularCtrl', ['$rootScope', '$scope', '$http', function($rootScope, $scope, $http) {
+.controller('testingAngularCtrl', ['$rootScope', '$scope', '$http', '$timeout', function($rootScope, $scope, $http, $timeout) {
     $scope.title = "Testing Angular Applications";
 
     $scope.destinations = [];
@@ -33,9 +33,11 @@ angular.module('testingAngularApp')
                     destination.weather = {};
                     destination.weather.main = response.data.weather[0].main;
                     destination.weather.temp = $scope.convertKelvinToCalcius(response.data.main.temp);
+                } else {
+                	$scope.message = "City not found";
                 }
             }, function(error) {
-                console.log(error);
+                $scope.message = "Server error!";
             });
 
     };
@@ -43,4 +45,12 @@ angular.module('testingAngularApp')
     $scope.convertKelvinToCalcius = function (temp) {
     	return Math.round(temp - 273);
     };
+
+    $scope.messageWatcher = $scope.$watch('message', function () {
+    	if ($scope.message) {
+    		$timeout(function () {
+    			$scope.message = null;
+    		}, 3000);
+    	}
+    })
 }])
