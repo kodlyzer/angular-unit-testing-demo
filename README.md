@@ -5,8 +5,9 @@ Steps:
 Clone the repo first.
 
 Then,
-npm start : this will start the application and you can go through the changes
-npm test : will start the test
+npm start : this will start the application and you can go through the changes.
+
+npm test : will start the test.
 
 
 Apart from these you could go to each version tags and see the changes. Each commit is tagged so going along won't be any issue. 
