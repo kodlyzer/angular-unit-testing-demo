@@ -11,7 +11,7 @@ npm test : will start the test.
 
 
 Apart from these you could go to each version tags and see the changes. Each commit is tagged so going along won't be any issue. 
-Till v1.0.0 there are no cutsom npm custom script tasks, it includes karma and other things which will need to be bootstrapped by ourselves.
+Till v1.0.0 there are no cutsom npm script tasks, it includes karma and other things which will need to be bootstrapped by ourselves.
 
 
 Following is the link for the slide. Please clone the repo and run index.html.
